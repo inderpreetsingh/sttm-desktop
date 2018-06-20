@@ -5,6 +5,7 @@ const remote = electron.remote;
 const app = remote.app;
 const Menu = remote.Menu;
 const main = remote.require('./app');
+const { store } = main;
 
 global.webview = document.querySelector('webview');
 
@@ -99,6 +100,12 @@ const menuTemplate = [
     role: 'window',
     submenu: [
       {
+        label: 'Overlay',
+        click: () => {
+          main.openSecondaryWindow('overlayWindow');
+        },
+      },
+      {
         label: 'Minimize',
         accelerator: 'CmdOrCtrl+M',
         role: 'minimize',
@@ -112,10 +119,9 @@ const menuTemplate = [
   },
   {
     label: 'Cast',
-    icon: './www/assets/img/ic_cast_black.png',
     submenu: [
       {
-        label: 'Search for Cast device',
+        label: 'Search for Google Cast device',
         click: () => {
           global.webview.send('search-cast');
         },
@@ -206,6 +212,12 @@ const winMenu = [
     label: 'Donate...',
     click: () => {
       electron.shell.openExternal('https://khalisfoundation.org/donate/');
+    },
+  },
+  {
+    label: 'Overlay',
+    click: () => {
+      main.openSecondaryWindow('overlayWindow');
     },
   },
 ];
@@ -367,7 +379,7 @@ function updateViewerScale() {
 }
 
 global.platform.ipc.on('external-display', (e, args) => {
-  if (global.platform.getUserPref('app.layout.presenter-view')) {
+  if (store.getUserPref('app.layout.presenter-view')) {
     document.body.classList.add('presenter-view');
     document.body.classList.remove('home');
   }
@@ -388,6 +400,8 @@ window.onresize = () => {
 
 const menuUpdate = (process.platform === 'darwin' || process.platform === 'linux' ? menu.items[0].submenu : menu.items[3].submenu);
 const menuCast = (process.platform === 'darwin' || process.platform === 'linux' ? menu.items[3].submenu : menu.items[6].submenu);
+const apvSwitch = document.getElementById('setting-slide-layout-display-options-akhandpaatt');
+
 global.platform.ipc.on('checking-for-update', () => {
   menuUpdate.items[2].visible = false;
   menuUpdate.items[3].visible = true;
@@ -413,12 +427,17 @@ global.platform.ipc.on('next-ang', (event, arg) => {
 global.platform.ipc.on('cast-session-active', () => {
   menuCast.items[0].visible = false;
   menuCast.items[1].visible = true;
-  if (global.platform.getUserPref('app.layout.presenter-view')) {
+  if (store.getUserPref('app.layout.presenter-view')) {
     document.body.classList.add('presenter-view', 'scale-viewer');
     document.body.classList.remove('home');
     updateViewerScale();
   }
-  // menuCast.icon = './www/assets/img/ic_cast_black_connected.png';
+
+  store.set('userPrefs.slide-layout.display-options.akhandpaatt', false);
+  document.body.classList.remove('akhandpaatt');
+  global.core.platformMethod('updateSettings');
+  apvSwitch.checked = false;
+  apvSwitch.disabled = true;
 });
 global.platform.ipc.on('cast-session-stopped', () => {
   menuCast.items[1].visible = false;
@@ -426,12 +445,10 @@ global.platform.ipc.on('cast-session-stopped', () => {
   if (!global.externalDisplay) {
     document.body.classList.remove('presenter-view', 'scale-viewer');
   }
-  // menuCast.icon = './www/assets/img/ic_cast_black.png';
+
+  apvSwitch.disabled = false;
 });
 
-/* global.platform.ipc.on('openSettings', () => {
-  settings.openSettings();
-}); */
 
 module.exports = {
   clearAPV() {
@@ -439,9 +456,9 @@ module.exports = {
     global.platform.ipc.send('clear-apv');
   },
 
-  sendLine(shabadID, lineID, Gurmukhi, English) {
+  sendLine(shabadID, lineID, Line) {
     global.webview.send('show-line', { shabadID, lineID });
-    const showLinePayload = { shabadID, lineID, Gurmukhi, English, live: false };
+    const showLinePayload = { shabadID, lineID, Line, live: false };
     if (document.body.classList.contains('livefeed')) {
       showLinePayload.live = true;
     }

@@ -3,6 +3,18 @@ const Store = require('./www/js/store.js');
 const defaultPrefs = require('./www/js/defaults.json');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+
+const expressApp = express();
+
+const http = require('http').Server(expressApp);
+const io = require('socket.io')(http);
+
+expressApp.use(express.static(path.join(__dirname, 'www', 'obs')));
+
+http.listen(1397); // TODO: move to config file
 
 const { app, BrowserWindow, dialog, ipcMain } = electron;
 const store = new Store({
@@ -10,7 +22,6 @@ const store = new Store({
   defaults: defaultPrefs,
 });
 const appVersion = app.getVersion();
-const fs = require('fs');
 
 let mainWindow;
 let viewerWindow = false;
@@ -23,6 +34,10 @@ const secondaryWindows = {
   helpWindow: {
     obj: false,
     url: `file://${__dirname}/www/help.html`,
+  },
+  overlayWindow: {
+    obj: false,
+    url: `file://${__dirname}/www/overlay.html`,
   },
 };
 let manualUpdate = false;
@@ -132,10 +147,9 @@ function createViewer(ipcData) {
   if (isExternal) {
     viewerWindow = new BrowserWindow({
       width: 800,
-      height: 600,
+      height: 400,
       x: viewerWindowPos.x,
       y: viewerWindowPos.y,
-      fullscreen: true,
       autoHideMenuBar: true,
       show: false,
       titleBarStyle: 'hidden',
@@ -150,6 +164,7 @@ function createViewer(ipcData) {
         height,
       });
       mainWindow.focus();
+      viewerWindow.setFullScreen(true);
       if (typeof ipcData !== 'undefined') {
         viewerWindow.webContents.send(ipcData.send, ipcData.data);
       }
@@ -175,7 +190,8 @@ function createViewer(ipcData) {
 }
 
 app.on('ready', () => {
-  const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
+  const screens = electron.screen;
+  const { width, height } = screens.getPrimaryDisplay().workAreaSize;
   mainWindow = new BrowserWindow({
     minWidth: 800,
     minHeight: 600,
@@ -215,6 +231,13 @@ app.on('ready', () => {
       changelogWindow.close();
     }
   });
+
+  // When a display is connected, add a viewer window if it does not already exit
+  screens.on('display-added', () => {
+    if (!viewerWindow) {
+      createViewer();
+    }
+  });
 });
 
 
@@ -249,9 +272,9 @@ function createBroadcastFiles(arg) {
   const gurbaniFile = `${userDataPath}/sttm-Gurbani.txt`;
   const englishFile = `${userDataPath}/sttm-English.txt`;
   try {
-    fs.writeFile(gurbaniFile, arg.Gurmukhi.trim());
+    fs.writeFile(gurbaniFile, arg.Line.Gurmukhi.trim());
     fs.appendFile(gurbaniFile, '\n');
-    fs.writeFile(englishFile, arg.English.trim());
+    fs.writeFile(englishFile, arg.Line.English.trim());
     fs.appendFile(englishFile, '\n');
   } catch (err) {
     // eslint-disable-next-line no-console
@@ -260,6 +283,9 @@ function createBroadcastFiles(arg) {
 }
 
 ipcMain.on('show-line', (event, arg) => {
+  const overlayPrefs = store.get('obs');
+  const payload = Object.assign(arg, overlayPrefs);
+  io.emit('show-line', payload);
   if (viewerWindow) {
     viewerWindow.webContents.send('show-line', arg);
   } else {
@@ -307,19 +333,10 @@ ipcMain.on('update-settings', () => {
   }
 });
 
-ipcMain.on('update-theme', () => {
-  if (viewerWindow) {
-    viewerWindow.webContents.send('update-theme');
-  }
-});
-
-ipcMain.on('remove-theme', () => {
-  if (viewerWindow) {
-    viewerWindow.webContents.send('remove-theme');
-  }
-});
-
-exports.openSecondaryWindow = openSecondaryWindow;
-exports.appVersion = appVersion;
-exports.checkForUpdates = checkForUpdates;
-exports.autoUpdater = autoUpdater;
+module.exports = {
+  openSecondaryWindow,
+  appVersion,
+  checkForUpdates,
+  autoUpdater,
+  store,
+};
