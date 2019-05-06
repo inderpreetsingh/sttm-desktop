@@ -59,7 +59,8 @@ const hideDecks = () => {
 };
 
 const activateSlide = ($deck, LineID) => {
-  [...$deck.querySelectorAll('.slide')].forEach(el => el.classList.remove('active'));
+  const $existingDeck = $deck;
+  [...$existingDeck.querySelectorAll('.slide')].forEach(el => el.classList.remove('active'));
   const line = document.querySelector(`.deck.active #slide${LineID}`);
   if (line) {
     line.classList.add('active');
@@ -367,7 +368,9 @@ const showLine = (ShabadID, LineID, rows, mode) => {
       smoothScroll(`#apv #slide${LineID}`);
     }
   } else {
-    const $existingDeck = document.querySelector(`div#shabad${ShabadID}.deck.active`);
+    const $existingDeck =
+      document.querySelector(`div#shabad${ShabadID}.deck.active`) ||
+      document.querySelector(`div#shabad${ShabadID}.deck`);
     const { cards, shabad } = createCards(rows, LineID);
     switch (mode) {
       case 'replace':
@@ -390,6 +393,12 @@ const showLine = (ShabadID, LineID, rows, mode) => {
         Object.assign(decks[ShabadID], shabad);
         break;
       case 'click':
+        /* if you click on verse when message is open (announcement, blank, waheguru) 
+        it should hide the message deck and show the shabad deck */
+        if ($message.classList.contains('active')) {
+          $message.classList.remove('active');
+          $preExistingDeck.classList.add('active');
+        }
         activateSlide($existingDeck, LineID);
         break;
       default:
