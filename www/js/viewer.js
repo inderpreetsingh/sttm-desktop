@@ -397,7 +397,7 @@ const showLine = (ShabadID, LineID, rows, mode) => {
         it should hide the message deck and show the shabad deck */
         if ($message.classList.contains('active')) {
           $message.classList.remove('active');
-          $preExistingDeck.classList.add('active');
+          $existingDeck.classList.add('active');
         }
         activateSlide($existingDeck, LineID);
         break;
