@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:khalisfoundation/sttm-desktop.git"
+    "url": "git+ssh://git@github.com/khalisfoundation/sttm-desktop.git"
   },
   "author": "Khalis, Inc. <techsupport@khalisfoundation.org>",
   "license": "OSL-3.0",
@@ -63,6 +63,8 @@
   },
   "dependencies": {
     "anvaad-js": "^1.4.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
     "copy-to-clipboard": "^3.0.8",
     "electron-chromecast": "^1.1.0",
     "electron-log": "^2.0.2",
@@ -100,7 +102,9 @@
     "tippy.js": "^2.5.2",
     "universal-analytics": "^0.4.20",
     "update": "^0.7.4",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "react": "^16.12.0",
+    "react-native": "^0.61.5"
   },
   "build": {
     "appId": "org.khalisfoundation.sttm",
@@ -168,5 +172,10 @@
   "optionalDependencies": {
     "react": "^16.12.0",
     "react-native": "^0.61.5"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/khalisfoundation/sttm-desktop/issues"
+  },
+  "homepage": "https://github.com/khalisfoundation/sttm-desktop#readme",
+  "keywords": []
 }

@@ -162,10 +162,19 @@
           id="path3794"
         />
       </svg>
+      <section id="react-test-container"></section>
     </div>
     <script type="text/javascript" src="assets/js/vendor/mousetrap.min.js"></script>
     <script type="text/javascript" src="js/viewer.js"></script>
     <script type="text/javascript" src="js/chromecast.js"></script>
     <script type="text/javascript" src="js/vendor/tingle.js"></script>
+
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Load our React component. -->
+    <script src="./jsxComponents/build/react_test.js"></script>
   </body>
 </html>
