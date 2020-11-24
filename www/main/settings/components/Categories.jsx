@@ -19,6 +19,7 @@ const SettingsFactory = ({ subCategory }) => {
           defaultType={subCategory.type}
           stateVar={convertToCamelCase(settingKey)}
           stateFunction={`set${convertToCamelCase(settingKey, true)}`}
+          settingKey={settingKey}
         />
       </div>,
     );
