@@ -366,6 +366,7 @@ module.exports = {
     this.$dbDownloadProgress.style.height = 0;
     this.$search.disabled = false;
     this.$search.dataset.databaseState = 'loaded';
+    document.body.classList.toggle('db-loading', false);
     this.$angSearch.disabled = false;
     this.$search.focus();
     this.changeSearchType(this.searchType);

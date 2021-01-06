@@ -90,6 +90,10 @@ function checkForNotifcations() {
   }, POLLING_INTERVAL);
 }
 
+const setStateLoading = isLoading => {
+  document.body.classList.toggle('db-loading', isLoading);
+};
+
 module.exports = {
   ipc,
   store,
@@ -127,6 +131,7 @@ module.exports = {
     if (force) {
       $search.placeholder = i18n.t('DATABASE.DOWNLOADING');
       $search.dataset.databaseState = 'loading';
+      setStateLoading(true);
     }
     isOnline().then(online => {
       if (online) {
@@ -142,6 +147,7 @@ module.exports = {
                 );
                 $search.placeholder = i18n.t('DATABASE.DOWNLOADING');
                 $search.dataset.databaseState = 'loading';
+                setStateLoading(true);
                 progress(
                   request(`https://banidb.com/databases/${database[dbPlatform].dbCompressedName}`),
                 )

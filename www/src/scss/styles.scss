@@ -417,6 +417,24 @@ a {
   }
 }
 
+.db-loading {
+  #toolbar-nav {
+    .toolbar-item {
+      filter: grayscale(100%);
+      cursor: not-allowed;
+
+      &:hover {
+        box-shadow: none;
+        transform: none;
+      }
+
+      &:active {
+        transform: none;
+      }
+    }
+  }
+}
+
 .lock-screen-message {
   align-items: center;
   display: flex;
