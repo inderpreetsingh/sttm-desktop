@@ -147,6 +147,7 @@ body {
   justify-content: flex-start;
   opacity: 0;
   position: absolute;
+  transition: opacity 1s;
   width: 100%;
   z-index: 10;
 
