@@ -497,7 +497,16 @@ const showText = (text, isGurmukhi = false) => {
   if (isGurmukhi) {
     $textIs.classList.add('gurmukhi');
   }
-  $textIs.innerHTML = text;
+  text.split(' ').forEach(word => {
+    const spanNode = document.createElement('span');
+    const spaceNode = document.createElement('span');
+    spanNode.innerText = word;
+    spaceNode.innerText = ' ';
+    spaceNode.classList.add('space-node');
+    $textIs.append(spanNode);
+    $textIs.append(spaceNode);
+    $textIs.append(document.createElement('wbr'));
+  });
 
   /* If slide is not empty, show quick tools */
   const $vcToggleIcon = document.querySelector('.vc-toggle-icon');
