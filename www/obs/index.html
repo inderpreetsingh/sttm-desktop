@@ -127,6 +127,8 @@
 
         document.body.classList.toggle('logo-off', !overlayPrefs.overlayVars.overlayLogo);
 
+        document.body.classList.toggle('time-off', !overlayPrefs.overlayVars.overlayTime);
+
         document.querySelectorAll('.content-top, .content-bottom').forEach(el => {
           // Clear styles added by other overrides
           document.querySelectorAll('span.o-gurbani, span.o-translation').forEach(spanEl => {
@@ -212,6 +214,7 @@
         <div class="logo-wrapper">
           <img alt="SikhiToTheMax" src="./sikhi-max-logo.png" class="sttm-logo" />
           <img alt="SikhiToTheMax" src="./sikhi-max-logo-white.png" class="sttm-logo-white" />
+          <div class="logo-time"></div>
         </div>
       </div>
     </section>
@@ -219,6 +222,10 @@
       if (preview) {
         writeLine(previewData);
       }
+      const setLogoTime = () =>
+        (document.querySelector('.logo-time').innerText = new Date().toLocaleTimeString());
+      setLogoTime();
+      setInterval(setLogoTime, 1000);
     </script>
   </body>
 </html>

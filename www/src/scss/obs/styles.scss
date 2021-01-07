@@ -159,8 +159,8 @@ body {
   }
 
   .logo-wrapper {
+    display: inline-block;
     background: transparent;
-    display: block;
     height: 100px;
     position: relative;
     width: 100%;
@@ -170,6 +170,11 @@ body {
     .sttm-logo-white {
       display: block;
       margin: auto;
+    }
+    .logo-time {
+      color: #fff;
+      width: 100%;
+      text-align: center;
     }
   }
 
@@ -329,9 +334,10 @@ body {
 
 .logo-wrapper {
   align-items: center;
+  flex-direction: column;
   background: #fff;
   border-radius: 5px;
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   padding: 2vh 2vw;
   position: fixed;
@@ -345,6 +351,12 @@ body {
   .sttm-logo-white {
     display: none;
   }
+
+  .logo-time {
+    color: #29689d;
+    font-weight: bold;
+    margin-top: 6px;
+  }
 }
 
 .logo-off {
@@ -353,6 +365,12 @@ body {
   }
 
   .logo-wrapper {
+    display: none;
+  }
+}
+
+.time-off {
+  .logo-time {
     display: none;
   }
 }

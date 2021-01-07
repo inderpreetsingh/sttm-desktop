@@ -104,6 +104,7 @@
         "gurbaniFontSize": 5,
         "gurbaniTextColor": "#EAC445",
         "overlayLogo": true,
+        "overlayTime": true,
         "overlayLarivaar": false,
         "translationFont": "Muli",
         "gurbaniFont": "Gurbani Akhar Thick",

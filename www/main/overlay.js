@@ -284,8 +284,9 @@ const resetButton = h(
       Object.assign(overlayVars, defaultVars);
       savePrefs();
 
-      const { overlayLogo, overlayLarivaar } = overlayVars;
+      const { overlayLogo, overlayLarivaar, overlayTime } = overlayVars;
       const $logoEl = document.querySelector('div.input-wrap.logo-toggle');
+      const $timeEl = document.querySelector('div.input-wrap.time-toggle');
       const $larivaarEl = document.querySelector('div.input-wrap.larivaar');
 
       document.querySelector('input.toggle-gurbani-text').value = overlayVars.textColor;
@@ -293,6 +294,7 @@ const resetButton = h(
       document.querySelector('input.background').value = overlayVars.bgColor;
 
       setToggleIcon($logoEl, overlayLogo);
+      setToggleIcon($timeEl, overlayTime);
       setToggleIcon($larivaarEl, overlayLarivaar, ['fa-link', 'fa-unlink']);
 
       const $larivaarLabel = $larivaarEl.querySelector('.setting-label');
@@ -388,6 +390,28 @@ const toggleLogo = h(
   h('div.setting-label', i18n.t('BANI_OVERLAY.LOGO')),
 );
 
+const toggleTime = h(
+  'div.input-wrap.time-toggle',
+  {
+    onclick: evt => {
+      if (overlayCast) {
+        overlayVars.overlayTime = !overlayVars.overlayTime;
+        savePrefs();
+        const { overlayTime } = overlayVars;
+
+        setToggleIcon(evt.currentTarget, overlayTime);
+
+        analytics.trackEvent('overlay', 'toggleTime', overlayTime);
+      }
+    },
+  },
+  h(
+    'div#time-btn',
+    h(`i.fa.cp-icon.${overlayVars.overlayTime ? 'fa-toggle-on' : 'fa-toggle-off'}`),
+  ),
+  h('div.setting-label', i18n.t('BANI_OVERLAY.TIME')),
+);
+
 const toggleAnnouncements = h(
   'div.input-wrap.announcement-toggle',
   {
@@ -435,6 +459,7 @@ const toggleGreenScreen = h(
 /** Main Control Bar Items */
 controlPanel.append(toggleCast);
 controlPanel.append(toggleLogo);
+controlPanel.append(toggleTime);
 controlPanel.append(toggleAnnouncements);
 controlPanel.append(toggleGreenScreen);
 controlPanel.append(separator);
