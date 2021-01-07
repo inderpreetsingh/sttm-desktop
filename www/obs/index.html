@@ -84,8 +84,8 @@
         document.querySelector('.o-teeka').innerHTML = Line.Punjabi || '';
         document.querySelector('.o-transliteration').innerHTML = transliteration;
 
-        document.querySelector('.overlay-wrapper').hidden =
-          Line.Gurmukhi === '' && Line.English === '';
+        document.querySelector('.overlay-wrapper').style.opacity =
+          Line.Gurmukhi === '' && Line.English === '' ? 0 : 1;
       };
 
       var applyOverlayPrefs = function() {
@@ -219,6 +219,12 @@
       if (preview) {
         writeLine(previewData);
       }
+      (() => {
+        const isEmptyBani = [...document.querySelectorAll('.content-bar')].some(
+          ({ innerText }) => innerText,
+        );
+        document.querySelector('.overlay-wrapper').style.opacity = !isEmptyBani ? 0 : 1;
+      })();
     </script>
   </body>
 </html>
