@@ -1,6 +1,11 @@
 const electron = require('electron');
 const h = require('hyperscript');
+const Noty = require('noty');
 const ip = require('ip');
+const fs = require('fs');
+const path = require('path');
+const util = require('util');
+const imagemin = require('imagemin');
 const copy = require('copy-to-clipboard');
 // eslint-disable-next-line import/no-unresolved
 const { obs: defaultPrefs } = require('./configs/defaults.json');
@@ -20,6 +25,19 @@ let announcementOverlay = store.getUserPref('app.announcement-overlay');
 const controlPanel = document.querySelector('.control-panel');
 const textControls = document.querySelector('.text-controls');
 const webview = document.createElement('webview');
+
+const mkdir = util.promisify(fs.mkdir);
+const userDataPath = remote.app.getPath('userData');
+const userLogoPath = path.resolve(userDataPath, 'user_logo');
+
+const uploadErrorNotification = (message, timeout = 3000) => {
+  new Noty({
+    type: 'error',
+    text: message,
+    timeout,
+    modal: true,
+  }).show();
+};
 
 const getUrl = () => {
   const overlayPort = remote.getGlobal('overlayPort');
@@ -127,6 +145,11 @@ const decreaseOpacity = () => {
   savePrefs();
 };
 
+const setUserLogo = userLogoUrl => {
+  overlayVars.userLogo = userLogoUrl;
+  savePrefs();
+};
+
 const setToggleIcon = (el, flag, classes = ['fa-toggle-on', 'fa-toggle-off']) => {
   const $icon = el.querySelector('.cp-icon');
   $icon.classList.toggle(classes[0], flag);
@@ -135,6 +158,20 @@ const setToggleIcon = (el, flag, classes = ['fa-toggle-on', 'fa-toggle-off']) =>
 
 const separator = h('div.separator');
 const separatorY = () => h('div.separator-y').cloneNode(true);
+
+const toBase64 = (fileUrl, callback) => {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = () => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open('GET', fileUrl);
+  xhr.responseType = 'blob';
+  xhr.send();
+};
 
 const layoutButtonFactory = layoutName =>
   h(
@@ -388,6 +425,41 @@ const toggleLogo = h(
   h('div.setting-label', i18n.t('BANI_OVERLAY.LOGO')),
 );
 
+const logoImageInput = h(
+  'label.input-wrap',
+  {
+    for: 'custom-logo-upload',
+  },
+  h('div.export-btn', h('i.fa.fa-image.cp-icon')),
+  h('div.setting-label', 'Custom Logo'),
+  h('input.file-input#themebg-upload', {
+    type: 'file',
+    onchange: async evt => {
+      try {
+        if (!fs.existsSync(userLogoPath)) await mkdir(userLogoPath);
+      } catch (error) {
+        uploadErrorNotification(i18n.t('THEMES.DIR_CREATE_ERR2'));
+      }
+      try {
+        const filePath = evt.target.files[0].path;
+        // eslint-disable-next-line no-param-reassign
+        evt.target.value = '';
+        if (filePath) {
+          // use image check
+          const files = await imagemin([filePath], userLogoPath);
+          if (files) {
+            toBase64(files[0].path, myBase64 => setUserLogo(myBase64));
+          }
+        } else {
+          throw new Error(i18n.t('THEMES.ALLOWED_IMGS_MSG'));
+        }
+      } catch (error) {
+        uploadErrorNotification(i18n.t('THEMES.USING_ERR'), 5000);
+      }
+    },
+  }),
+);
+
 const toggleAnnouncements = h(
   'div.input-wrap.announcement-toggle',
   {
@@ -435,6 +507,7 @@ const toggleGreenScreen = h(
 /** Main Control Bar Items */
 controlPanel.append(toggleCast);
 controlPanel.append(toggleLogo);
+controlPanel.append(logoImageInput);
 controlPanel.append(toggleAnnouncements);
 controlPanel.append(toggleGreenScreen);
 controlPanel.append(separator);

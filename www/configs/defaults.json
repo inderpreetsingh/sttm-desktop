@@ -97,6 +97,7 @@
       "overlayVars": {
         "layout": "split",
         "bgColor": "#2c3e50",
+        "userLogo": "",
         "bgOpacity": 1,
         "textColor": "#EAC445",
         "padding": 0.5,

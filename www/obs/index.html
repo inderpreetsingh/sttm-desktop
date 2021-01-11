@@ -88,6 +88,19 @@
           Line.Gurmukhi === '' && Line.English === '';
       };
 
+      var setUserLogo = function(updatedOverlayVars) {
+        const { userLogo } = updatedOverlayVars;
+        const logo = document.querySelector('.sttm-logo');
+        const logoWhite = document.querySelector('.sttm-logo-white');
+        if (userLogo) {
+          logo.src = userLogo;
+          logoWhite.src = userLogo;
+        } else {
+          logo.src = './sikhi-max-logo.png';
+          logoWhite.src = './sikhi-max-logo-white.png';
+        }
+      };
+
       var applyOverlayPrefs = function() {
         const overlayColor = overlayPrefs.overlayVars.greenScreen ? '#0f0' : 'transparent';
         const bgOpacity =
@@ -195,6 +208,7 @@
       socket.on('update-prefs', function(request) {
         overlayPrefs = request.overlayPrefs;
         applyOverlayPrefs();
+        setUserLogo(overlayPrefs.overlayVars);
       });
     </script>
   </head>
