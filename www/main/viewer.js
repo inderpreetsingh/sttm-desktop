@@ -314,8 +314,33 @@ const createCards = (rows, LineID) => {
     });
     const gurmukhiContainer = document.createElement('div');
 
-    const padched = taggedGurmukhi.join(' ');
-    const larivaar = taggedGurmukhi.join('<wbr>');
+    const gurmukhiContainerLined = [];
+    let index = 0;
+    taggedGurmukhi.forEach((node, i) => {
+      if (!gurmukhiContainerLined[index]) {
+        gurmukhiContainerLined.push([]);
+      }
+      gurmukhiContainerLined[index].push(node);
+      // Checks if the current word has visraam AND next word is not visraam then switches line
+      if (
+        taggedGurmukhi[i].includes('visraam-main') &&
+        !(taggedGurmukhi[i + 1] && taggedGurmukhi[i + 1].includes('visraam-main'))
+      ) {
+        index += 1;
+      }
+    });
+
+    const joinLineWords = (data, joinString) =>
+      data
+        .map(line => {
+          const span = h('span.line');
+          span.innerHTML = line.join(joinString);
+          return span.outerHTML;
+        })
+        .join(joinString);
+
+    const padched = joinLineWords(gurmukhiContainerLined, ' ');
+    const larivaar = joinLineWords(gurmukhiContainerLined, '<wbr>');
 
     gurmukhiContainer.innerHTML = `<span class="padchhed">${padched}</span>
                                     <span class="larivaar">${larivaar}</span>`;

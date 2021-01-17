@@ -179,6 +179,10 @@ h2 {
         margin-left: 1rem;
       }
     }
+    .line {
+      display: inline-block;
+      white-space: normal;
+    }
   }
 
   .larivaar {
@@ -187,6 +191,9 @@ h2 {
     i {
       display: none;
       font-style: normal;
+    }
+    .line {
+      display: inline-block;
     }
   }
 }
