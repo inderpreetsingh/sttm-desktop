@@ -9,6 +9,9 @@ function SearchHeader() {
   const breakpoint = 1308;
   useEffect(() => {
     window.addEventListener('resize', () => setWidth(window.innerWidth));
+    return () => {
+      window.removeEventListener('resize');
+    };
   }, []);
 
   const { i18n } = remote.require('./app');
