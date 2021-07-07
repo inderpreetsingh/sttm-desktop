@@ -17,32 +17,24 @@ $badge-color: #fff !default;
 ///
 
 %label {
+  cursor: default;
+  display: inline-block;
   line-height: 1;
   white-space: nowrap;
-  display: inline-block;
-  cursor: default;
 }
 
-@mixin label-layout(
-  $fontsize: $label-fontsize,
-  $padding: $label-padding
-) {
+@mixin label-layout($fontsize: $label-fontsize, $padding: $label-padding) {
   font-size: $fontsize;
   padding: $padding;
 }
 
-@mixin label-style(
-  $background: $label-background,
-  $color: $label-color,
-  $radius: $label-radius
-) {
+@mixin label-style($background: $label-background, $color: $label-color, $radius: $label-radius) {
   background: $background;
   border-radius: $radius;
 
   @if $color == auto {
     color: isitlight($background);
-  }
-  @else {
+  } @else {
     color: $color;
   }
 }
@@ -78,30 +70,23 @@ $badge-color: #fff !default;
 
 %badge {
   align-items: center;
-  justify-content: center;
-  display: inline-flex;
   border-radius: 1000px;
+  display: inline-flex;
+  justify-content: center;
 }
 
-@mixin badge-layout(
-  $fontsize: $badge-fontsize,
-  $diameter: $badge-diameter
-) {
+@mixin badge-layout($fontsize: $badge-fontsize, $diameter: $badge-diameter) {
   font-size: $fontsize;
-  width: $diameter;
   height: $diameter;
+  width: $diameter;
 }
 
-@mixin badge-style(
-  $background: $badge-background,
-  $color: $badge-font-color
-) {
+@mixin badge-style($background: $badge-background, $color: $badge-font-color) {
   background: $background;
 
   @if $color == auto {
     color: isitlight($background);
-  }
-  @else {
+  } @else {
     color: $color;
   }
 }

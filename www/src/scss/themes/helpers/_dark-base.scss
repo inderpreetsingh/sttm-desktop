@@ -12,6 +12,7 @@
   $accent: $sky-blue;
   $highlight-bg: $dull-blue;
   $highlight-text: $transparent-blue;
+
   color: $text-base;
 
   a {
@@ -274,8 +275,8 @@
   .workspace-bar {
     background-color: $bg-main;
     div:hover {
-      color: $text-base;
       background-color: $bg-bright;
+      color: $text-base;
     }
   }
 

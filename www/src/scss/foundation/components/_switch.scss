@@ -18,32 +18,32 @@ $switch-paddle-offset: 4px !default;
 ///
 
 %switch {
-  position: relative;
-  overflow: hidden;
   display: inline-block;
+  overflow: hidden;
+  position: relative;
 
   > input {
-    position: absolute;
     left: -9999px;
     outline: none;
+    position: absolute;
   }
 
   > label {
-    -ms-touch-action: manipulation;
-        touch-action: manipulation;
-    display: block;
-    width: 100%;
-    height: 100%;
     cursor: pointer;
+    display: block;
+    height: 100%;
     margin: 0;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    width: 100%;
 
     // Paddle
     &::after {
       content: '';
       display: block;
+      left: 0;
       position: absolute;
       top: 0;
-      left: 0;
     }
   }
 
@@ -58,17 +58,14 @@ $switch-paddle-offset: 4px !default;
   $width - width of the switch.
   $height - height of the switch.
 */
-@mixin switch-layout(
-  $width: $switch-width,
-  $height: $switch-height
-) {
-  width: $width;
+@mixin switch-layout($width: $switch-width, $height: $switch-height) {
   height: $height;
+  width: $width;
 
   > label {
     &::after {
-      width: $height;
       height: $height;
+      width: $height;
     }
   }
   input:checked + label {
@@ -90,6 +87,7 @@ $switch-paddle-offset: 4px !default;
   @if hasvalue($border) {
     border: $border;
   }
+
   border-radius: $radius;
 
   > label {
@@ -101,7 +99,7 @@ $switch-paddle-offset: 4px !default;
       transition: left $animation-speed ease-out;
 
       @if hasvalue($paddle-offset) {
-        border: $paddle-offset solid $background
+        border: $paddle-offset solid $background;
       }
     }
   }
@@ -128,7 +126,11 @@ $switch-paddle-offset: 4px !default;
   .switch {
     @include switch;
 
-    &.small { @include switch-layout(rem-calc(40), rem-calc(26)); }
-    &.large { @include switch-layout(rem-calc(60), rem-calc(38)); }
+    &.small {
+      @include switch-layout(rem-calc(40), rem-calc(26));
+    }
+    &.large {
+      @include switch-layout(rem-calc(60), rem-calc(38));
+    }
   }
 }

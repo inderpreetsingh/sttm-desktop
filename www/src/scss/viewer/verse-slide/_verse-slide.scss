@@ -17,6 +17,7 @@
 
 .slide-gurbani {
   @extend .gurmukhi-vaak-thick;
+
   font-size: 45px;
 }
 
@@ -28,6 +29,7 @@
 
   .gurmukhi-announcement-slide {
     @extend .gurmukhi-vaak-thick;
+
     line-height: 1.15em;
   }
 }
@@ -43,6 +45,7 @@
 
 .slide-teeka {
   @extend .gurmukhi-vaak;
+
   font-weight: 600;
   margin: 10px 0;
 }
@@ -53,8 +56,8 @@
 }
 
 .slide-next-line {
-  opacity: 0.5;
   margin: 10px 0;
+  opacity: 0.5;
 }
 
 .slide-left-align {
@@ -67,9 +70,9 @@
   font-size: 12px;
   font-weight: bold;
   height: 98%;
+  max-width: 150px;
   position: fixed;
   width: 18%;
-  max-width: 150px;
 }
 
 .quicktool {
@@ -109,8 +112,8 @@
       border: 1px solid rgba(0, 0, 0, 0.05);
       border-radius: 75px;
       font-size: 16px;
-      padding: 2px;
       height: 22px;
+      padding: 2px;
       width: 22px;
     }
 

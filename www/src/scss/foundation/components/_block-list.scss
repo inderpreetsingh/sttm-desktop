@@ -42,22 +42,21 @@ $blocklist-check-icons: true !default;
   $full-bleed: when "true", the margins of the list invert to line it up with the edge of a padded element.
 */
 %block-list-container {
-  margin-bottom: 1rem;
   line-height: 1;
+  margin-bottom: 1rem;
   user-select: none;
 
-  &, ul {
+  &,
+  ul {
     list-style-type: none;
   }
   ul {
     margin-left: 0;
   }
 }
-@mixin block-list-container(
-  $font-size: $blocklist-fontsize,
-  $full-bleed: $blocklist-fullbleed
-) {
+@mixin block-list-container($font-size: $blocklist-fontsize, $full-bleed: $blocklist-fullbleed) {
   @extend %block-list-container;
+
   font-size: $font-size;
 
   @if $full-bleed {
@@ -79,14 +78,16 @@ $blocklist-check-icons: true !default;
   $uppercase: $blocklist-header-uppercase,
   $offset: get-side($blocklist-item-padding, left)
 ) {
-  margin-top: 1em;
   color: $color;
+  cursor: default;
+  font-size: $font-size;
   font-weight: bold;
   margin-bottom: 0.5em;
   margin-left: $offset;
-  font-size: $font-size;
-  cursor: default;
-  @if $uppercase { text-transform: uppercase; }
+  margin-top: 1em;
+  @if $uppercase {
+    text-transform: uppercase;
+  }
 }
 
 /*
@@ -118,24 +119,29 @@ $blocklist-check-icons: true !default;
   }
 
   // Inner elements share the same basic styles
-  > a, > span, > label {
+  > a,
+  > span,
+  > label {
+    color: $color;
     display: block;
+    line-height: 1;
     padding: $padding;
     padding-left: get-side($padding, left);
-    color: $color;
-    line-height: 1;
   }
   > span {
     cursor: default;
   }
-  > a, > label {
+  > a,
+  > label {
     cursor: pointer;
 
     &:hover {
       color: $color-hover;
     }
   }
-  > a, > label, select {
+  > a,
+  > label,
+  select {
     &:hover {
       background: $background-hover;
     }
@@ -143,12 +149,20 @@ $blocklist-check-icons: true !default;
 
   // Coloring classes
   &.caution > a {
-    &, &:hover { color: $alert-color; }
+    &,
+    &:hover {
+      color: $alert-color;
+    }
   }
   &.disabled > a {
     cursor: default;
-    &, &:hover { color: $color-disabled; }
-    &:hover { background: transparent; }
+    &,
+    &:hover {
+      color: $color-disabled;
+    }
+    &:hover {
+      background: transparent;
+    }
   }
 }
 
@@ -164,15 +178,15 @@ $blocklist-check-icons: true !default;
   $left-class: 'left',
   $left-padding: get-side($blocklist-item-padding, top)
 ) {
+  color: $color;
   display: inline-block;
   float: right;
   padding: 0;
-  color: $color;
   pointer-events: none;
 
   &.#{$left-class} {
-    margin-left: $left-padding;
     float: none;
+    margin-left: $left-padding;
   }
 }
 
@@ -189,15 +203,15 @@ $blocklist-check-icons: true !default;
 ) {
   // Chevrons are a pseudo-element
   &::after {
+    color: $color;
     content: '\203A';
     display: block;
+    font-size: 2em;
+    font-weight: bold;
     position: absolute;
     right: get-side($padding, right);
     top: 50%;
     transform: translateY(-50%);
-    font-weight: bold;
-    color: $color;
-    font-size: 2em;
   }
 
   // Labels next to links move over to make room for the chevron
@@ -213,31 +227,29 @@ $blocklist-check-icons: true !default;
   $size - size of the icon as a percentage (decimal) of the list item's height.
   $item-selector - overrides the 'li' selector used for list items.
 */
-@mixin block-list-icons(
-  $size: $blocklist-item-icon-size,
-  $item-selector: 'li'
-) {
+@mixin block-list-icons($size: $blocklist-item-icon-size, $item-selector: 'li') {
   // PH - need a better solution
-  $item-height:
-    $blocklist-fontsize
-    + get-side($blocklist-item-padding, top)
-    + get-side($blocklist-item-padding, top);
+  $item-height: $blocklist-fontsize + get-side($blocklist-item-padding, top) +
+    get-side($blocklist-item-padding, top);
 
   $icon-height: $item-height * $blocklist-item-icon-size;
   $icon-offset: ($item-height - $icon-height) / 2;
 
   #{$item-selector} {
-    > a, > span, > label {
+    > a,
+    > span,
+    > label {
       padding-left: (get-side($blocklist-item-padding, left) * 2) + $blocklist-item-icon-size;
     }
-    img, .iconic {
+    img,
+    .iconic {
+      border-radius: 8px;
+      height: $icon-height;
+      left: $icon-offset;
+      pointer-events: none;
       position: absolute;
       top: $icon-offset;
-      left: $icon-offset;
       width: $icon-height;
-      height: $icon-height;
-      border-radius: 8px;
-      pointer-events: none;
     }
   }
 }
@@ -268,26 +280,28 @@ $blocklist-check-icons: true !default;
     $right-padding: get-side($padding, right);
     $height: ($blocklist-fontsize * 1.4 + $top-padding + $bottom-padding);
 
-    overflow: visible;
-    box-sizing: border-box;
-    margin: 0;
     border: 0;
-    height: $height;
-    padding: $top-padding $right-padding $bottom-padding $left-padding;
+    box-sizing: border-box;
     color: inherit;
     font-size: $blocklist-fontsize;
     -webkit-font-smoothing: antialiased;
+    height: $height;
+    margin: 0;
+    overflow: visible;
+    padding: $top-padding $right-padding $bottom-padding $left-padding;
     vertical-align: middle;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       border: 0;
     }
   }
 
   // Multiple select
-  li > input[type="checkbox"], li > input[type="radio"] {
-    position: absolute;
+  li > input[type='checkbox'],
+  li > input[type='radio'] {
     left: -9999px;
+    position: absolute;
 
     & + label {
       display: block;
@@ -299,14 +313,15 @@ $blocklist-check-icons: true !default;
       &:checked + label {
         &::before {
           @include image-checkmark($color);
-          content: '';
+
           background-size: 100% 100%;
-          width: 1.5em;
-          height: 1.5em;
           color: $primary-color;
+          content: '';
           float: right;
-          pointer-events: none;
+          height: 1.5em;
           margin-top: -0.25em;
+          pointer-events: none;
+          width: 1.5em;
         }
       }
     }
@@ -319,25 +334,25 @@ $blocklist-check-icons: true !default;
     select {
       // Reset pesky <select> styles
       -webkit-appearance: none;
-         -moz-appearance: none;
-      outline: 0;
+      -moz-appearance: none;
       background: 0;
-      border: 0;
-      height: auto;
-      padding: $padding;
-      margin: 0;
-      font-size: 1em; // Same size as its parent
-      line-height: 1;
-      color: inherit;
       background-color: transparent;
+      border: 0;
+      color: inherit;
+      font-size: 1em; // Same size as its parent
+      height: auto;
+      line-height: 1;
+      margin: 0;
+      outline: 0;
+      padding: $padding;
     }
   }
 
   // Switches
   .#{$switch-class} {
     position: absolute;
-    top: 50%;
     right: get-side($padding, right);
+    top: 50%;
     transform: translateY(-50%);
   }
 }
@@ -347,14 +362,22 @@ $blocklist-check-icons: true !default;
     @include block-list-container;
     @include block-list-inputs;
 
-    &.with-icons { @include block-list-icons; }
-    header       { @include block-list-header; }
+    &.with-icons {
+      @include block-list-icons;
+    }
+    header {
+      @include block-list-header;
+    }
 
     li {
       @include block-list-item;
 
-      &.with-chevron    { @include block-list-chevron; }
-      .block-list-label { @include block-list-label; }
+      &.with-chevron {
+        @include block-list-chevron;
+      }
+      .block-list-label {
+        @include block-list-label;
+      }
     }
   }
 }

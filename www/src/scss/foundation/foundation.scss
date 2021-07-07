@@ -13,21 +13,16 @@ $foundation-version: '1.2.0';
 //   "vendor/normalize";
 
 // Helpers
-@import
-  "helpers/functions",
-  "helpers/mixins",
-  "helpers/breakpoints",
-  "helpers/images";
+@import 'helpers/functions', 'helpers/mixins', 'helpers/breakpoints', 'helpers/images';
 
 // Global styles
-@import
-  "global";
+@import 'global';
 
 // Components
-@import
-  // "components/iconic",
-  // "components/action-sheet",
-  "components/block-list",
+@import 'components/block-list', 'components/loader', 'components/switch';
+
+// "components/iconic",
+// "components/action-sheet",
 // "components/button",
 // "components/button-group",
 // "components/card",
@@ -37,14 +32,12 @@ $foundation-version: '1.2.0';
 // "components/title-bar",
 // "components/label",
 // "components/list",
-   "components/loader",
 // "components/menu-bar",
 // "components/modal",
 // "components/motion",
 // "components/notification",
 // "components/off-canvas",
 // "components/popup",
-  "components/switch";
 // "components/tabs",
 // "components/accordion",
 // "components/typography",

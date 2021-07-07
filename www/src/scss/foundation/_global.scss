@@ -26,7 +26,7 @@ $base-font-size: 100% !default;
 $base-line-height: 1.5 !default;
 
 // Text selector helpers
-$headers: "h1,h2,h3,h4,h5,h6";
+$headers: 'h1,h2,h3,h4,h5,h6';
 
 // We use these to define default font weights
 $font-weight-normal: normal !default;
@@ -35,7 +35,7 @@ $font-weight-bold: bold !default;
 // We use these to control various global styles
 $body-background: #fff !default;
 $body-font-color: #222 !default;
-$body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
+$body-font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif !default;
 $body-font-weight: $font-weight-normal !default;
 $body-font-style: normal !default;
 $body-antialiased: true;
@@ -43,10 +43,10 @@ $body-antialiased: true;
 // Application Colors
 $primary-color: #00558b !default;
 $secondary-color: #f1f1f1 !default;
-$alert-color: #F04124 !default;
-$info-color: #A0D3E8 !default;
-$success-color: #43AC6A !default;
-$warning-color: #F08A24 !default;
+$alert-color: #f04124 !default;
+$info-color: #a0d3e8 !default;
+$success-color: #43ac6a !default;
+$warning-color: #f08a24 !default;
 $dark-color: #232323 !default;
 $gray: #dfdfdf !default;
 $gray-dark: darken($gray, 8) !default;
@@ -72,15 +72,18 @@ $foundation-colors: (
 
 @include exports(global) {
   // Make extra sure we're using the whole window
-  html, body {
-    height: 100%;
+  html,
+  body {
     font-size: $base-font-size;
+    height: 100%;
   }
   // Set box-sizing globally to handle padding and border widths
   html {
     box-sizing: border-box;
   }
-  *, *:before, *:after {
+  *,
+  *::before,
+  *::after {
     box-sizing: inherit;
   }
 
@@ -88,12 +91,12 @@ $foundation-colors: (
   body {
     background: $body-background;
     color: $body-font-color;
-    padding: 0;
-    margin: 0;
     font-family: $body-font-family;
-    font-weight: $body-font-weight;
     font-style: $body-font-style;
+    font-weight: $body-font-weight;
     line-height: 1;
+    margin: 0;
+    padding: 0;
     position: relative;
 
     @if $body-antialiased {
@@ -104,17 +107,20 @@ $foundation-colors: (
 
   img {
     // Grid Defaults to get images and embeds to work properly
-    max-width: 100%;
-    height: auto;
-    -ms-interpolation-mode: bicubic;
-
     // Get rid of gap under images by making them display: inline-block; by default
     display: inline-block;
+    height: auto;
+    -ms-interpolation-mode: bicubic;
+    max-width: 100%;
     vertical-align: middle;
   }
 
   // Give all anchors and interactive directives the hover cusor
-  a, [ui-sref], [zf-open], [zf-close], [zf-toggle] {
+  a,
+  [ui-sref],
+  [zf-open],
+  [zf-close],
+  [zf-toggle] {
     cursor: pointer;
   }
 
@@ -122,7 +128,9 @@ $foundation-colors: (
   .map_canvas {
     img,
     embed,
-    object { max-width: none !important; }
+    object {
+      max-width: none !important;
+    }
   }
 
   .padding {

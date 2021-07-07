@@ -17,39 +17,35 @@ $tab-title-padding: $global-padding !default;
 $tab-content-padding: $global-padding !default;
 ///
 
-@mixin tabstrip(
-	$orientation: horizontal,
-	$background: $tabstrip-background
-) {
-	/*
+@mixin tabstrip($orientation: horizontal, $background: $tabstrip-background) {
+  /*
 		Container styles
 	*/
-	display: flex;
-	background: $background;
+  background: $background;
+  display: flex;
 
-	@if $orientation == vertical {
-	  flex-flow: column nowrap;
-	}
-	@else {
-		flex-flow: row wrap;
-	}
+  @if $orientation == vertical {
+    flex-flow: column nowrap;
+  } @else {
+    flex-flow: row wrap;
+  }
 }
 
 @mixin tabstrip-item(
-	$background: $tab-title-background,
-	$background-hover: $tab-title-background-hover,
-	$background-active: $tab-title-background-active,
-	$color: $tab-title-color,
-	$color-active: $tab-title-color-active,
-	$padding: $tab-title-padding
+  $background: $tab-title-background,
+  $background-hover: $tab-title-background-hover,
+  $background-active: $tab-title-background-active,
+  $color: $tab-title-color,
+  $color-active: $tab-title-color-active,
+  $padding: $tab-title-padding
 ) {
   background: $background;
-  padding: $padding;
+  color: $color;
+  cursor: pointer;
+  flex: 0 1 auto;
   line-height: 1;
   margin: 0;
-  flex: 0 1 auto;
-  cursor: pointer;
-  color: $color;
+  padding: $padding;
 
   &.is-active {
     background: $background-active;
@@ -64,9 +60,7 @@ $tab-content-padding: $global-padding !default;
   }
 }
 
-@mixin tab-content(
-	$padding: $tab-content-padding
-) {
+@mixin tab-content($padding: $tab-content-padding) {
   padding: $padding;
 }
 
