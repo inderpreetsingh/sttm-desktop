@@ -1,60 +1,60 @@
 $count: 10;
 $time: 2; //in seconds
 $size: 100;
-$color: #ffffff;
+$color: #fff;
 
 .preloader {
+  background-color: rgba(0, 0, 0, 0.7);
+  bottom: 0;
   display: none;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.7);
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
 }
 
 .loader {
   /* size */
-  width: $size + px;
+  animation: rotatePreloader $time + s infinite ease-in;
   height: $size + px;
-  position: absolute;
   left: 50%;
+  position: absolute;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-  animation: rotatePreloader $time + s infinite ease-in;
+  width: $size + px;
 }
 @keyframes rotatePreloader {
   0% {
-  transform: translateX(-50%) translateY(-50%) rotateZ(0deg);
+    transform: translateX(-50%) translateY(-50%) rotateZ(0deg);
   }
   100% {
-  transform: translateX(-50%) translateY(-50%) rotateZ(-360deg);
+    transform: translateX(-50%) translateY(-50%) rotateZ(-360deg);
   }
 }
 .loader div {
-  position: absolute;
-  width: 100%;
   height: 100%;
   opacity: 0;
-}
-.loader div:before {
-  content: "";
   position: absolute;
-  left: 50%;
-  top: 0%;
-  width: 10%;
-  height: 10%;
+  width: 100%;
+}
+.loader div::before {
   background-color: $color;
-  transform: translateX(-50%);
   border-radius: 50%;
+  content: '';
+  height: 10%;
+  left: 50%;
+  position: absolute;
+  top: 0%;
+  transform: translateX(-50%);
+  width: 10%;
 }
 
 @for $i from 1 through $count {
   .loader div:nth-child(#{$i}) {
-    transform: rotateZ(((360 / $count) * ($i - 1)) + deg);
     animation: rotateCircle + $i $time + s infinite linear;
+    transform: rotateZ(((360 / $count) * ($i - 1)) + deg);
     z-index: $count - $i;
   }
   @keyframes rotateCircle#{$i} {
@@ -72,8 +72,8 @@ $color: #ffffff;
       transform: rotateZ((0 - ((360 / $count) * ($i - 1))) + deg);
     }
     100% {
-      transform: rotateZ((0 - ((360 / $count) * ($count - 1))) + deg);
       opacity: 1;
+      transform: rotateZ((0 - ((360 / $count) * ($count - 1))) + deg);
     }
   }
 }

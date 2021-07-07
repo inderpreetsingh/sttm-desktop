@@ -19,13 +19,13 @@ $thumbnail-shadow: 0 3px 15px rgba(black, 0.25) !default;
   $x: nth($closebutton-position, 1);
   $y: nth($closebutton-position, 2);
 
-  position: absolute;
   color: $closebutton-color;
-  #{$x}: $global-padding;
-  #{$y}: $global-padding;
+  cursor: pointer;
   font-size: $closebutton-size;
   line-height: $closebutton-lineheight;
-  cursor: pointer;
+  position: absolute;
+  #{$x}: $global-padding;
+  #{$y}: $global-padding;
 
   &:hover {
     color: $closebutton-color-hover;
@@ -34,8 +34,8 @@ $thumbnail-shadow: 0 3px 15px rgba(black, 0.25) !default;
 
 // Make your images fancy-like.
 %thumbnail {
-  padding: $thumbnail-padding;
   box-shadow: $thumbnail-shadow;
+  padding: $thumbnail-padding;
 }
 
 @include exports(extras) {
@@ -47,8 +47,12 @@ $thumbnail-shadow: 0 3px 15px rgba(black, 0.25) !default;
   }
   ul.thumbnails > li {
     margin-bottom: 1rem;
-    
-    a { display: block; }
-    img { @extend %thumbnail; }
+
+    a {
+      display: block;
+    }
+    img {
+      @extend %thumbnail;
+    }
   }
 }

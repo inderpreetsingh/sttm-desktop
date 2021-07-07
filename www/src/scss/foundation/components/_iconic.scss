@@ -2,7 +2,7 @@
 // ------
 //
 // A sample of 24 flexible, easily schemable icons from the folks at Iconic.
-// 
+//
 // Features:
 //  - 24 icons
 //  - Built-in coloring and sizing classes
@@ -18,20 +18,14 @@ $iconic-accent-stroke: $iconic-accent-fill !default;
 ///
 
 // Colors the fill, and optionally stroke, accent fill, and accent stroke of an Iconic icon.
-@mixin color-icon(
-  $fill,
-  $stroke: null,
-  $fillAccent: null,
-  $strokeAccent: null
-) {
+@mixin color-icon($fill, $stroke: null, $fillAccent: null, $strokeAccent: null) {
   * {
     fill: $fill;
 
     // Use the fill color if no stroke is provided
     @if hasvalue($stroke) {
       stroke: $stroke;
-    }
-    @else {
+    } @else {
       stroke: $fill;
     }
 
@@ -39,21 +33,18 @@ $iconic-accent-stroke: $iconic-accent-fill !default;
       // Use the fill color if no accent is provided
       @if hasvalue($fillAccent) {
         fill: $fillAccent;
-      }
-      @else {
+      } @else {
         fill: $fill;
       }
 
       // Use the normal stroke color if no accent is provided
       @if hasvalue($strokeAccent) {
         stroke: $strokeAccent;
-      }
-      @else {
+      } @else {
         // ...or use the fill if no normal stroke is provided
         @if hasvalue($stroke) {
           stroke: $stroke;
-        }
-        @else {
+        } @else {
           stroke: $fill;
         }
       }
@@ -63,14 +54,15 @@ $iconic-accent-stroke: $iconic-accent-fill !default;
 
 @include exports(iconic) {
   .iconic {
-    width: 1rem;
     height: 1rem;
     vertical-align: middle;
+    width: 1rem;
 
     a > & {
       @include color-icon($primary-color);
-      margin-top: -2px;
+
       margin-right: 0.25rem;
+      margin-top: -2px;
     }
   }
 

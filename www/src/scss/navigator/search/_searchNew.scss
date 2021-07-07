@@ -4,39 +4,40 @@
   .left-pane {
     @include inline-flex($jc-value: initial, $width: fit-content);
     i {
-      font-size: 22px;
       color: $mild-dark;
+      font-size: 22px;
     }
     .language-selector {
-      justify-content: space-between;
-      display: inline-flex;
       align-items: center;
+      display: inline-flex;
+      justify-content: space-between;
       label {
-        display: inline-flex;
         align-items: center;
+        display: inline-flex;
         padding: 0 2px;
       }
     }
   }
   .search-type {
     label {
-      display: inline-flex;
       align-items: center;
+      display: inline-flex;
       padding: 0 2px;
     }
   }
   .search-result-controls {
     @include flex;
-    padding: 0 0 0 10px;
+
     font-style: italic;
+    padding: 0 0 0 10px;
 
     & span {
       color: $mild-dark;
     }
 
     .filters {
-      padding-right: 12px;
       color: $mild-dark;
+      padding-right: 12px;
 
       .select-bani {
         -webkit-appearance: none;
@@ -65,11 +66,11 @@
           outline: none;
         }
         label {
-          font-style: italic;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
             Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-          font-weight: 400;
           -webkit-font-smoothing: antialiased;
+          font-style: italic;
+          font-weight: 400;
         }
       }
       select {
@@ -91,12 +92,13 @@
   .search-content {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
     @include flex;
+
     margin: 0;
     width: 100%;
     .input-buttons {
-      height: 40px;
-      display: flex;
       align-items: center;
+      display: flex;
+      height: 40px;
     }
     span {
       align-self: center;
@@ -110,14 +112,14 @@
       flex-grow: 1;
       height: 40px;
       margin: 0;
+      padding: 0 8px;
       position: relative;
       width: max-content;
-      padding: 0 8px;
 
       &::-webkit-input-placeholder {
+        color: $black;
         font-family: $body-font-family;
         font-size: 0.8em;
-        color: $black;
       }
     }
   }
@@ -126,14 +128,16 @@
   }
   .search-footer {
     @include flex($ai-value: start, $jc-value: initial, $width: 99%);
+
     font-size: 14px;
-    padding: 10px;
     margin-bottom: 5px;
+    padding: 10px;
     span {
       @include inline-flex($width: initial);
-      padding: 5px;
-      height: 20px;
+
       border-left: 3px solid;
+      height: 20px;
+      padding: 5px;
     }
     .search-footer-span1 {
       color: #e1802f;

@@ -15,12 +15,12 @@ $popup-shadow: 0 0 10px rgba(#000, 0.25) !default;
 ///
 
 %popup {
-  position: absolute;
-  z-index: 1000;
   opacity: 0;
   overflow: hidden;
-  transition: opacity 0.25s ease-out;
   pointer-events: none;
+  position: absolute;
+  transition: opacity 0.25s ease-out;
+  z-index: 1000;
 
   &.tether-enabled {
     opacity: 1;
@@ -28,9 +28,7 @@ $popup-shadow: 0 0 10px rgba(#000, 0.25) !default;
   }
 }
 
-@mixin popup-layout(
-  $width: $popup-width
-) {
+@mixin popup-layout($width: $popup-width) {
   width: $popup-width;
 }
 @mixin popup-style(
@@ -41,9 +39,9 @@ $popup-shadow: 0 0 10px rgba(#000, 0.25) !default;
   $border: $popup-border
 ) {
   background: $background;
+  border: $border;
   border-radius: $radius;
   box-shadow: $shadow;
-  border: $border;
 }
 
 @mixin popup(
@@ -62,7 +60,11 @@ $popup-shadow: 0 0 10px rgba(#000, 0.25) !default;
   .popup {
     @include popup;
 
-    &.dark    { @include popup-style($dark-color, #fff); }
-    &.primary { @include popup-style($primary-color, isitlight($primary-color)); }
+    &.dark {
+      @include popup-style($dark-color, #fff);
+    }
+    &.primary {
+      @include popup-style($primary-color, isitlight($primary-color));
+    }
   }
 }

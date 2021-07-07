@@ -8,21 +8,21 @@
   .slide-gurbani.vishraam-gradient {
     span {
       span.vishraam-y {
-        border-radius: 15px;
         background: linear-gradient(
           to right,
           rgba(229, 229, 229, 0) 20%,
           rgba($visraam-main, 0.7) 100%
         );
+        border-radius: 15px;
       }
 
       span.vishraam-v {
-        border-radius: 15px;
         background: linear-gradient(
           to right,
           rgba(229, 229, 229, 0) 20%,
           rgba($visraam-yamki, 0.7) 100%
         );
+        border-radius: 15px;
       }
     }
   }

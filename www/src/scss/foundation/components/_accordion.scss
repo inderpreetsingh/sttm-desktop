@@ -27,11 +27,11 @@ $accordion-content-padding: $global-padding !default;
   $color-active: $accordion-title-color-active,
   $padding: $accordion-title-padding
 ) {
-  padding: $padding;
   background: $background;
   color: $color;
-  line-height: 1;
   cursor: pointer;
+  line-height: 1;
+  padding: $padding;
 
   &:hover {
     background: $background-hover;
@@ -43,12 +43,9 @@ $accordion-content-padding: $global-padding !default;
   }
 }
 
-@mixin accordion-content(
-  $padding: $accordion-content-padding
-) {
-  padding: $padding;
-
+@mixin accordion-content($padding: $accordion-content-padding) {
   display: none;
+  padding: $padding;
   .is-active > & {
     display: block;
   }
@@ -60,13 +57,10 @@ $accordion-content-padding: $global-padding !default;
       border: $accordion-border;
     }
   }
-    .accordion-item {
-
-    }
-    .accordion-title {
-      @include accordion-title;
-    }
-    .accordion-content {
-      @include accordion-content;
-    }
+  .accordion-title {
+    @include accordion-title;
+  }
+  .accordion-content {
+    @include accordion-content;
+  }
 }

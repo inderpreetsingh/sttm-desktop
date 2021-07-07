@@ -29,15 +29,20 @@ $card-divider-background: smartscale($card-background, 7%) !default;
   $padding: $card-padding,
   $margin: $card-margin
 ) {
-  border: $border;
-  margin-bottom: $margin;
   background: $background;
-  color: $color;
+  border: $border;
   border-radius: $radius;
   box-shadow: $shadow;
+  color: $color;
+  margin-bottom: $margin;
   overflow: hidden;
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: inherit;
   }
 
@@ -50,17 +55,12 @@ $card-divider-background: smartscale($card-background, 7%) !default;
   }
 }
 
-@mixin card-divider(
-  $background: $card-divider-background,
-  $padding: $card-padding
-) {
+@mixin card-divider($background: $card-divider-background, $padding: $card-padding) {
   background: $background;
   padding: $padding;
 }
 
-@mixin card-section(
-  $padding: $card-padding
-) {
+@mixin card-section($padding: $card-padding) {
   padding: $padding;
 }
 
@@ -77,17 +77,15 @@ $card-divider-background: smartscale($card-background, 7%) !default;
           $border: 0
         );
         .card-divider {
-          @include card-divider(
-            $background: smartscale($color-value, 7%)
-          );
+          @include card-divider($background: smartscale($color-value, 7%));
         }
       }
     }
   }
-    .card-divider {
-      @include card-divider;
-    }
-    .card-section {
-      @include card-section;
-    }
+  .card-divider {
+    @include card-divider;
+  }
+  .card-section {
+    @include card-section;
+  }
 }

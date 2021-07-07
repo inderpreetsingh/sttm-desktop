@@ -32,9 +32,9 @@ $titlebar-item-classes: (
   $right: map-get($titlebar-item-classes, right);
   $title: map-get($titlebar-item-classes, title);
 
+  align-items: center;
   display: flex;
   flex: 0 0 auto;
-  align-items: center;
   justify-content: flex-start;
   overflow: visible;
 
@@ -44,10 +44,12 @@ $titlebar-item-classes: (
   }
 
   // Denotes left, right, and center sections of the bar
-  .#{$left}, .#{$center}, .#{$right} {
+  .#{$left},
+  .#{$center},
+  .#{$right} {
     display: block;
-    white-space: nowrap;
     overflow: visible;
+    white-space: nowrap;
 
     // If only one section is in use, stretch it all the way out
     &:first-child:last-child {
@@ -59,17 +61,17 @@ $titlebar-item-classes: (
   // Left always comes first, then center, then right
   // The left and right sections have the same width
   .#{$left} {
-    order: 1;
     flex: 0 0 $titlebar-side-width;
+    order: 1;
   }
   .#{$center} {
-    order: 2;
     flex: 0 0 $titlebar-center-width;
+    order: 2;
     text-align: center;
   }
   .#{$right} {
-    order: 3;
     flex: 0 0 $titlebar-side-width;
+    order: 3;
     text-align: right;
   }
 
@@ -98,9 +100,9 @@ $titlebar-item-classes: (
   $padding: $titlebar-padding
 ) {
   background: $background;
+  border-bottom: $border;
   color: $color;
   padding: $padding;
-  border-bottom: $border;
 }
 
 @mixin title-bar(
@@ -119,17 +121,31 @@ $titlebar-item-classes: (
 
     &.primary {
       @include title-bar-style($primary-color, isitlight($primary-color));
-      a, a:hover { color: isitlight($primary-color); }
-      @if using(iconic) { .iconic { @include color-icon(isitlight($primary-color)); } }
+      a,
+      a:hover {
+        color: isitlight($primary-color);
+      }
+      @if using(iconic) {
+        .iconic {
+          @include color-icon(isitlight($primary-color));
+        }
+      }
     }
     &.dark {
       @include title-bar-style($dark-color, #fff);
-      a, a:hover { color: #fff; }
-      @if using(iconic) { .iconic { @include color-icon(#fff); } }
+      a,
+      a:hover {
+        color: #fff;
+      }
+      @if using(iconic) {
+        .iconic {
+          @include color-icon(#fff);
+        }
+      }
     }
   }
-    .title-bar-bottom {
-      border-bottom: 0;
-      border-top: $titlebar-border;
-    }
+  .title-bar-bottom {
+    border-bottom: 0;
+    border-top: $titlebar-border;
+  }
 }

@@ -15,8 +15,7 @@ $rem-base: 16px !default;
 
   @if $module-key == true or $module-key == null {
     @return true;
-  }
-  @else {
+  } @else {
     @return false;
   }
 }
@@ -28,8 +27,7 @@ $rem-base: 16px !default;
   // Check if the module is already on the imported list
   @if type-of(index($modules, $name)) == 'number' {
     @return true;
-  }
-  @else {
+  } @else {
     @return false;
   }
 }
@@ -112,8 +110,7 @@ $rem-base: 16px !default;
 @function isitlight($color, $yes: #000, $no: #fff, $threshold: 60%) {
   @if (lightness($color) > $threshold) {
     @return $yes;
-  }
-  @else {
+  } @else {
     @return $no;
   }
 }
@@ -163,28 +160,37 @@ $rem-base: 16px !default;
     @return $val;
   }
   @if $length == 2 {
-    @return map-get((
-      top: nth($val, 1),
-      bottom: nth($val, 1),
-      left: nth($val, 2),
-      right: nth($val, 2),
-    ), $side);
+    @return map-get(
+      (
+        top: nth($val, 1),
+        bottom: nth($val, 1),
+        left: nth($val, 2),
+        right: nth($val, 2),
+      ),
+      $side
+    );
   }
   @if $length == 3 {
-    @return map-get((
-      top: nth($val, 1),
-      left: nth($val, 2),
-      right: nth($val, 2),
-      bottom: nth($val, 3),
-    ), $side);
+    @return map-get(
+      (
+        top: nth($val, 1),
+        left: nth($val, 2),
+        right: nth($val, 2),
+        bottom: nth($val, 3),
+      ),
+      $side
+    );
   }
   @if $length == 4 {
-    @return map-get((
-      top: nth($val, 1),
-      right: nth($val, 2),
-      bottom: nth($val, 3),
-      left: nth($val, 4),
-    ), $side);
+    @return map-get(
+      (
+        top: nth($val, 1),
+        right: nth($val, 2),
+        bottom: nth($val, 3),
+        left: nth($val, 4),
+      ),
+      $side
+    );
   }
 }
 
@@ -195,29 +201,29 @@ $rem-base: 16px !default;
 /// @param {keyword} $elem - Border component to extract.
 ///
 /// @param If the value exists, returns the value. If the value is not in the border definition, the function will return a 0px width, solid style, or black border.
- @function get-border-value($val, $elem) {
-   // Find the width, style, or color and return it
-   @each $v in $val {
-     $type: type-of($v);
-     @if $elem == width and $type == 'number' {
-       @return $v;
-     }
-     @if $elem == style and $type == 'string' {
-       @return $v;
-     }
-     @if $elem == color and $type == 'color' {
-       @return $v;
-     }
-   }
+@function get-border-value($val, $elem) {
+  // Find the width, style, or color and return it
+  @each $v in $val {
+    $type: type-of($v);
+    @if $elem == width and $type == 'number' {
+      @return $v;
+    }
+    @if $elem == style and $type == 'string' {
+      @return $v;
+    }
+    @if $elem == color and $type == 'color' {
+      @return $v;
+    }
+  }
 
-   // Defaults
-   $defaults: (
-     width: 0,
-     style: solid,
-     color: black,
-   );
-   @return map-get($defaults, $elem);
- }
+  // Defaults
+  $defaults: (
+    width: 0,
+    style: solid,
+    color: black,
+  );
+  @return map-get($defaults, $elem);
+}
 
 /// Get Shadow Value
 /// Given shadow value $val, find a specific element of the shadow, which is $elem. The possible values for $elem are x, y, size, spread, color, and inset.
@@ -239,8 +245,7 @@ $rem-base: 16px !default;
   @if $elem == color {
     @if type-of(nth($val, -1)) == color {
       @return nth($val, -1);
-    }
-    @else {
+    } @else {
       @return black;
     }
   }
@@ -255,36 +260,28 @@ $rem-base: 16px !default;
   @if $elem == x {
     @if length($values) >= 1 {
       @return nth($values, 1);
-    }
-    @else {
+    } @else {
       @return 0;
     }
-  }
-  @else if $elem == y {
+  } @else if $elem == y {
     @if length($values) >= 2 {
       @return nth($values, 2);
-    }
-    @else {
+    } @else {
       @return 0;
     }
-  }
-  @else if $elem == size {
+  } @else if $elem == size {
     @if length($values) >= 3 {
       @return nth($values, 3);
-    }
-    @else {
+    } @else {
       @return 0;
     }
-  }
-  @else if $elem == spread {
+  } @else if $elem == spread {
     @if length($values) >= 4 {
       @return nth($values, 4);
-    }
-    @else {
+    } @else {
       @return 0;
     }
-  }
-  @else {
+  } @else {
     @return false;
   }
 }
@@ -315,9 +312,11 @@ $rem-base: 16px !default;
 /// @param {number} $value - Pixel value to convert.
 ///
 /// @return A number in rems, calculated based on the given value and the base pixel value.
-@function convert-to-rem($value, $base-value: $rem-base)  {
+@function convert-to-rem($value, $base-value: $rem-base) {
   $value: strip-unit($value) / strip-unit($base-value) * 1rem;
-  @if ($value == 0rem) { $value: 0; } // Turn 0rem into 0
+  @if ($value == 0) {
+    $value: 0;
+  } // Turn 0rem into 0
   @return $value;
 }
 
@@ -333,7 +332,9 @@ $rem-base: 16px !default;
   }
   $max: length($values);
 
-  @if $max == 1 { @return convert-to-rem(nth($values, 1), $base-value); }
+  @if $max == 1 {
+    @return convert-to-rem(nth($values, 1), $base-value);
+  }
 
   $remValues: ();
   @for $i from 1 through $max {

@@ -20,44 +20,41 @@ $offcanvas-frame-selector: '.grid-frame' !default;
 ///
 
 %off-canvas {
-  position: fixed;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  position: fixed;
   transition: transform $offcanvas-animation-speed ease-out;
   z-index: 2;
 
   // Active state
   &.is-active {
-    transform: translate(0,0) !important;
+    transform: translate(0, 0) !important;
   }
 
   // Frame styles
   & ~ #{$offcanvas-frame-selector} {
-    transform: translate(0,0,0);
-    transition: transform 0.25s ease-out;
     backface-visibility: hidden;
     background: white;
+    transform: translate(0, 0, 0);
+    transition: transform 0.25s ease-out;
   }
 }
 @mixin off-canvas-detached {
-  z-index: 0;
   box-shadow: none;
+  z-index: 0;
 
-  &, &.is-active {
+  &,
+  &.is-active {
     transform: none;
   }
 
   & ~ #{$offcanvas-frame-selector} {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     z-index: 1;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
   }
 }
 
-@mixin off-canvas-layout(
-  $position: left,
-  $size: default,
-  $shadow: $offcanvas-shadow
-) {
+@mixin off-canvas-layout($position: left, $size: default, $shadow: $offcanvas-shadow) {
   /*
     Get shadow values for later use
   */
@@ -77,13 +74,14 @@ $offcanvas-frame-selector: '.grid-frame' !default;
     @if $size == default {
       $size: $offcanvas-size-horizontal;
     }
-    width: $size;
+
     height: 100%;
-  }
-  @else {
+    width: $size;
+  } @else {
     @if $size == default {
       $size: $offcanvas-size-vertical;
     }
+
     height: $size;
     width: 100%;
   }
@@ -92,41 +90,56 @@ $offcanvas-frame-selector: '.grid-frame' !default;
     Positioning
   */
   @if $position == left {
-    top: 0;
     left: 0;
-    @if hasvalue($shadow) { box-shadow: inset (-$shadow-length) 0 $shadow-size $shadow-color; }
+    top: 0;
+    @if hasvalue($shadow) {
+      box-shadow: inset (-$shadow-length) 0 $shadow-size $shadow-color;
+    }
+
     transform: translateX(-100%);
     &.is-active {
-      & ~ #{$offcanvas-frame-selector} { transform: translateX($size) !important; }
+      & ~ #{$offcanvas-frame-selector} {
+        transform: translateX($size) !important;
+      }
     }
-  }
-  @else if $position == right {
+  } @else if $position == right {
     left: auto;
-    top: 0;
     right: 0;
-    @if hasvalue($shadow) { box-shadow: inset $shadow-length 0 $shadow-size $shadow-color; }
+    top: 0;
+    @if hasvalue($shadow) {
+      box-shadow: inset $shadow-length 0 $shadow-size $shadow-color;
+    }
+
     transform: translateX(100%);
     &.is-active {
-      & ~ #{$offcanvas-frame-selector} { transform: translateX(-$size) !important; }
+      & ~ #{$offcanvas-frame-selector} {
+        transform: translateX(-$size) !important;
+      }
     }
-  }
-  @else if $position == top {
-    top: 0;
+  } @else if $position == top {
     left: 0;
+    top: 0;
     transform: translateY(-100%);
-    @if hasvalue($shadow) { box-shadow: inset 0 (-$shadow-length) $shadow-size $shadow-color; }
-    &.is-active {
-      & ~ #{$offcanvas-frame-selector} { transform: translateY($size) !important; }
+    @if hasvalue($shadow) {
+      box-shadow: inset 0 (-$shadow-length) $shadow-size $shadow-color;
     }
-  }
-  @else if $position == bottom {
-    top: auto;
+    &.is-active {
+      & ~ #{$offcanvas-frame-selector} {
+        transform: translateY($size) !important;
+      }
+    }
+  } @else if $position == bottom {
     bottom: 0;
     left: 0;
+    top: auto;
     transform: translateY(100%);
-    @if hasvalue($shadow) { box-shadow: inset 0 $shadow-length $shadow-size $shadow-color; }
+    @if hasvalue($shadow) {
+      box-shadow: inset 0 $shadow-length $shadow-size $shadow-color;
+    }
     &.is-active {
-      & ~ #{$offcanvas-frame-selector} { transform: translateY(-$size) !important; }
+      & ~ #{$offcanvas-frame-selector} {
+        transform: translateY(-$size) !important;
+      }
     }
   }
 }
@@ -140,8 +153,7 @@ $offcanvas-frame-selector: '.grid-frame' !default;
 
   @if $color == auto {
     color: isitlight($background, #000, #fff);
-  }
-  @else {
+  } @else {
     color: $color;
   }
 
@@ -156,14 +168,28 @@ $offcanvas-frame-selector: '.grid-frame' !default;
     @include off-canvas-layout;
     @include off-canvas-style;
 
-    &.top    { @include off-canvas-layout(top); }
-    &.right  { @include off-canvas-layout(right); }
-    &.bottom { @include off-canvas-layout(bottom); }
-    &.left   { @include off-canvas-layout(left); }
+    &.top {
+      @include off-canvas-layout(top);
+    }
+    &.right {
+      @include off-canvas-layout(right);
+    }
+    &.bottom {
+      @include off-canvas-layout(bottom);
+    }
+    &.left {
+      @include off-canvas-layout(left);
+    }
 
-    &.detached { @include off-canvas-detached; }
+    &.detached {
+      @include off-canvas-detached;
+    }
 
-    &.primary { @include off-canvas-style($primary-color, auto); }
-    &.dark    { @include off-canvas-style($dark-color, auto); }
+    &.primary {
+      @include off-canvas-style($primary-color, auto);
+    }
+    &.dark {
+      @include off-canvas-style($dark-color, auto);
+    }
   }
 }

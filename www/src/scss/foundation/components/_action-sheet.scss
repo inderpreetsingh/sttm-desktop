@@ -35,9 +35,9 @@ $actionsheet-link-background-hover: smartscale($actionsheet-background) !default
 ) {
   // Menu container
   ul {
+    list-style-type: none;
     margin: -($padding);
     margin-top: 0;
-    list-style-type: none;
     user-select: none;
 
     // If the menu has no content above it
@@ -51,15 +51,15 @@ $actionsheet-link-background-hover: smartscale($actionsheet-background) !default
 
     // Menu links
     a {
-      display: block;
-      padding: $padding * 0.8;
-      line-height: 1;
-      color: $color;
       border-top: 1px solid $border-color;
+      color: $color;
+      display: block;
+      line-height: 1;
+      padding: $padding * 0.8;
 
       &:hover {
-        color: $color;
         background: $background-hover;
+        color: $color;
       }
     }
 
@@ -67,8 +67,8 @@ $actionsheet-link-background-hover: smartscale($actionsheet-background) !default
       color: $alert-color;
     }
     .disabled > a {
-      pointer-events: none;
       color: #999;
+      pointer-events: none;
     }
   }
 }
@@ -84,16 +84,16 @@ $actionsheet-link-background-hover: smartscale($actionsheet-background) !default
   $padding: $actionsheet-padding,
   $background: $actionsheet-background
 ) {
-  position: fixed;
-  left: 0;
-  z-index: 1000;
-  width: 100%;
-  padding: $padding;
   background: $background;
+  left: 0;
+  padding: $padding;
+  position: fixed;
   text-align: center;
-  transition-property: $animate;
   transition-duration: $animation-speed;
+  transition-property: $animate;
   transition-timing-function: ease-out;
+  width: 100%;
+  z-index: 1000;
 
   @if hasvalue($shadow) {
     box-shadow: $shadow;
@@ -130,12 +130,12 @@ $actionsheet-link-background-hover: smartscale($actionsheet-background) !default
   /*
     Core styles
   */
-  position: absolute;
-  left: 50%;
-  width: $width;
   border-radius: $radius;
+  left: 50%;
   opacity: 0;
   pointer-events: none;
+  position: absolute;
+  width: $width;
 
   /*
     Menu shadow
@@ -155,66 +155,67 @@ $actionsheet-link-background-hover: smartscale($actionsheet-background) !default
   /*
     Menu tail
   */
-  &::before, &::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    display: block;
-    width: 0px;
-    height: 0px;
+  &::before,
+  &::after {
     border-left: $tail-size solid transparent;
     border-right: $tail-size solid transparent;
+    content: '';
+    display: block;
+    height: 0;
+    left: 50%;
     margin-left: -($tail-size);
+    position: absolute;
+    width: 0;
   }
 
   /*
     Positioning
   */
   @if $position == bottom {
-    top: auto;
     bottom: 0;
+    top: auto;
     transform: translateX(-50%) translateY(110%);
     &.is-active {
       transform: translateX(-50%) translateY(100%);
     }
 
-    &::before, &::after {
-      top: -($tail-size);
-      bottom: auto;
-      border-top: 0;
+    &::before,
+    &::after {
       border-bottom: $tail-size solid $background;
+      border-top: 0;
+      bottom: auto;
+      top: -($tail-size);
     }
     &::before {
-      top: -($tail-size + 2);
       border-bottom-color: rgba(black, 0.15);
+      top: -($tail-size + 2);
     }
-
-  }
-  @else if $position == top {
-    top: 0;
+  } @else if $position == top {
     bottom: auto;
+    top: 0;
     transform: translateX(-50%) translateY(-120%);
     &.is-active {
       transform: translateX(-50%) translateY(-110%);
     }
 
-    &::before, &::after {
-      top: auto;
-      bottom: -($tail-size);
-      border-top: $tail-size solid $background;
+    &::before,
+    &::after {
       border-bottom: 0;
+      border-top: $tail-size solid $background;
+      bottom: -($tail-size);
+      top: auto;
     }
     &::before {
-      bottom: -($tail-size + 2);
       border-top-color: rgba(black, 0.15);
+      bottom: -($tail-size + 2);
     }
   }
 }
 
 @include exports(action-sheet) {
   .action-sheet-container {
-    position: relative;
     display: inline-block;
+    position: relative;
 
     .button {
       margin-left: 0;
@@ -235,11 +236,19 @@ $actionsheet-link-background-hover: smartscale($actionsheet-background) !default
 
     &.primary {
       background: $primary-color;
-      color: isitlight($primary-color);
       border: 0;
-      &::before { display: none; }
-      &::before, &::after { border-top-color: $primary-color; }
-      &.top::before, &.top::after { border-bottom-color: $primary-color; }
+      color: isitlight($primary-color);
+      &::before {
+        display: none;
+      }
+      &::before,
+      &::after {
+        border-top-color: $primary-color;
+      }
+      &.top::before,
+      &.top::after {
+        border-bottom-color: $primary-color;
+      }
 
       @include action-sheet-menu(
         $color: isitlight($primary-color),
@@ -249,11 +258,19 @@ $actionsheet-link-background-hover: smartscale($actionsheet-background) !default
     }
     &.dark {
       background: $dark-color;
-      color: isitlight($dark-color);
       border: 0;
-      &::before { display: none; }
-      &::before, &::after { border-top-color: $dark-color; }
-      &.top::before, &.top::after { border-bottom-color: $dark-color; }
+      color: isitlight($dark-color);
+      &::before {
+        display: none;
+      }
+      &::before,
+      &::after {
+        border-top-color: $dark-color;
+      }
+      &.top::before,
+      &.top::after {
+        border-bottom-color: $dark-color;
+      }
 
       @include action-sheet-menu(
         $color: isitlight($dark-color),

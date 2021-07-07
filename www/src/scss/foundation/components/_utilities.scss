@@ -52,8 +52,8 @@ $block-selector: '[class*="grid-block"]';
 @include exports(utilities) {
   // Vertical alignment
   .v-align {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: space-between;
 
     $align-values: (
@@ -80,29 +80,41 @@ $block-selector: '[class*="grid-block"]';
   }
 
   // Visibility
-  .hide { display: none !important; }
+  .hide {
+    display: none !important;
+  }
 
-  .invisible { visibility: hidden; }
+  .invisible {
+    visibility: hidden;
+  }
 
   @each $size in $breakpoint-classes {
     .hide-for-#{$size} {
       @include hide-for($size);
-      &#{$block-selector} { @include hide-for($size, flex); }
+      &#{$block-selector} {
+        @include hide-for($size, flex);
+      }
     }
 
     .show-for-#{$size} {
       @include show-for($size);
-      &#{$block-selector} { @include show-for($size, flex); }
+      &#{$block-selector} {
+        @include show-for($size, flex);
+      }
     }
 
     .hide-for-#{$size}-only {
       @include hide-for-only($size);
-      &#{$block-selector} { @include hide-for-only($size, flex); }
+      &#{$block-selector} {
+        @include hide-for-only($size, flex);
+      }
     }
 
     .show-for-#{$size}-only {
       @include show-for-only($size);
-      &#{$block-selector} { @include show-for-only($size, flex); }
+      &#{$block-selector} {
+        @include show-for-only($size, flex);
+      }
     }
   }
 
@@ -110,16 +122,20 @@ $block-selector: '[class*="grid-block"]';
     .hide-for-#{$orientation} {
       @include breakpoint($orientation) {
         display: none !important;
-        &#{$block-selector} { display: flex !important; }
+        &#{$block-selector} {
+          display: flex !important;
+        }
       }
     }
 
     .show-for-#{$orientation} {
       display: none !important;
-      
+
       @include breakpoint($orientation) {
         display: block !important;
-        &#{$block-selector} { display: flex !important; }
+        &#{$block-selector} {
+          display: flex !important;
+        }
       }
     }
   }
@@ -131,7 +147,7 @@ $block-selector: '[class*="grid-block"]';
     .text-#{$align} {
       text-align: $align;
     }
-    
+
     @each $size in $breakpoint-classes {
       @include breakpoint($size) {
         .#{$size}-text-#{$align} {
@@ -150,7 +166,9 @@ $block-selector: '[class*="grid-block"]';
   /*
     Floating
   */
-  .clearfix { @include clearfix; }
+  .clearfix {
+    @include clearfix;
+  }
 
   @each $float in (left, right, none) {
     .float-#{$float} {
